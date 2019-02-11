@@ -1,0 +1,9 @@
+name = "TestJulex"
+uuid = "d60edae6-2e10-11e9-1905-8d695e0ef7c3"
+authors = ["Helge Eichhorn <git@helgeeichhorn.de>"]
+version = "0.1.0"
+
+[deps]
+Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+Eterm = "31f415ca-2d2d-11e9-05ad-e37ee3ba8a1a"
+Julex = "d95183e4-2e0d-11e9-32e1-7dc7ede81e18"

@@ -1,0 +1,33 @@
+# This file is machine-generated - editing it directly is not advised
+
+[[Distributed]]
+deps = ["Random", "Serialization", "Sockets"]
+uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+
+[[Eterm]]
+git-tree-sha1 = "b4dde7b5827c10d1940ff1cff86801e44d8ad62c"
+repo-rev = "master"
+repo-url = "https://github.com/helgee/Eterm.jl"
+uuid = "31f415ca-2d2d-11e9-05ad-e37ee3ba8a1a"
+version = "0.1.0"
+
+[[Julex]]
+deps = ["Eterm", "Logging"]
+git-tree-sha1 = "23a12fb18bf61a713faafac57bfce0a38ee6408b"
+repo-rev = "master"
+repo-url = "https://github.com/helgee/Julex.jl"
+uuid = "d95183e4-2e0d-11e9-32e1-7dc7ede81e18"
+version = "0.1.0"
+
+[[Logging]]
+uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+
+[[Random]]
+deps = ["Serialization"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[Serialization]]
+uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[Sockets]]
+uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
