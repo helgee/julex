@@ -13,7 +13,7 @@ version = "0.1.0"
 
 [[Julex]]
 deps = ["ErlangTerm", "Logging"]
-git-tree-sha1 = "ca314d659d9ec084fc9ab6ed8d42e6df25354dd0"
+git-tree-sha1 = "77fadaf22c103639d64b4dddd49697a8cd648d45"
 repo-rev = "master"
 repo-url = "https://github.com/helgee/Julex.jl"
 uuid = "d95183e4-2e0d-11e9-32e1-7dc7ede81e18"
