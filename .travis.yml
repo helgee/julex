@@ -1,0 +1,11 @@
+language: elixir
+elixir:
+  - 1.8
+otp_release:
+  - 21.0
+before_script:
+  - wget https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1.0-linux-x86_64.tar.gz -O /tmp/julia.tar.gz
+  - tar -xvf -O /tmp/julia.tar.gz
+  - export PATH=$PATH:$PWD/julia-1.1.0/bin
+script:
+  - mix test
