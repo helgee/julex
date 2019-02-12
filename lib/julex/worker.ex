@@ -21,9 +21,11 @@ defmodule Julex.Worker do
 
   def nprocs() do
     nprocs = Application.get_env(:julex, __MODULE__)[:nprocs]
+
     case nprocs do
       nil ->
         @default_nprocs
+
       _ ->
         nprocs
     end
@@ -43,8 +45,8 @@ defmodule Julex.Worker do
     {:noreply, %{state | awaiting: Map.put(state.awaiting, id, from)}}
   end
 
-  def handle_info({port, {:data, response}}, %{port: port} = state) do
-    data = :erlang.binary_to_term(response)
+  def handle_info({port, {:data, <<131, _::binary>> = data}}, %{port: port} = state) do
+    data = :erlang.binary_to_term(data)
 
     case data do
       {:log, message} ->
@@ -55,6 +57,8 @@ defmodule Julex.Worker do
         handle_response(state, data)
     end
   end
+
+  def handle_info({port, {:data, _}}, %{port: port} = state), do: {:noreply, state}
 
   def handle_info({port, {:exit_status, status}}, %{port: port}) do
     :erlang.error({:port_exit, status})
@@ -80,20 +84,14 @@ defmodule Julex.Worker do
         raise("The julia executable is not on the path.")
 
       _ ->
-        case System.cmd(path, init_args(project)) do
-          {_, 0} ->
-            Port.open(
-              {:spawn_executable, path},
-              [
-                :binary,
-                args: run_args(module),
-                env: [{'JULIA_PROJECT', String.to_charlist(project)}]
-              ]
-            )
-
-          _ ->
-            raise("Julia Worker could not be started.")
-        end
+        Port.open(
+          {:spawn_executable, path},
+          [
+            :binary,
+            args: run_args(module),
+            env: [{'JULIA_PROJECT', String.to_charlist(project)}]
+          ]
+        )
     end
   end
 
@@ -128,16 +126,13 @@ defmodule Julex.Worker do
     end
   end
 
-  defp init_args(project) do
-    ["--project=#{project}", "-e", "\"import Pkg; Pkg.instantiate()\""]
-  end
-
   defp run_args(module) do
     [
+      "--startup-file=no",
       "--color=yes",
       "--procs=#{nprocs() - 1}",
       "-e",
-      "using Julex, #{module}; Julex.run_loop()"
+      "import Pkg; Pkg.instantiate(); using Julex, #{module}; Julex.run_loop()"
     ]
   end
 end
