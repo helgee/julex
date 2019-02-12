@@ -3,6 +3,8 @@ elixir:
   - 1.8
 otp_release:
   - 21.0
+env:
+  - JULIA_DEPOT_PATH=/tmp/.julia
 before_script:
   - wget https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1.0-linux-x86_64.tar.gz -O /tmp/julia.tar.gz
   - tar -xvf /tmp/julia.tar.gz
