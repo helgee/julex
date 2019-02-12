@@ -75,23 +75,37 @@ defmodule Julex.Worker do
   #############
 
   defp start_port() do
-    path = System.find_executable("julia")
+    julia = System.find_executable("julia")
     project = Application.get_env(:julex, __MODULE__)[:project]
     module = Application.get_env(:julex, __MODULE__)[:module]
 
-    case path do
+    case julia do
       nil ->
-        raise("The julia executable is not on the path.")
+        raise("The `julia` executable is not on the path.")
 
       _ ->
-        Port.open(
-          {:spawn_executable, path},
-          [
-            :binary,
-            args: run_args(module),
-            env: [{'JULIA_PROJECT', String.to_charlist(project)}]
-          ]
-        )
+        return =
+          System.cmd(
+            julia,
+            ["--startup-file=no", "-e", "import Pkg; Pkg.instantiate()"],
+            env: [{"JULIA_PROJECT", project}]
+          )
+
+        case return do
+          {_, 0} ->
+            Port.open(
+              {:spawn_executable, julia},
+              [
+                :binary,
+                args: run_args(module),
+                env: [{'JULIA_PROJECT', String.to_charlist(project)}]
+              ]
+            )
+
+          _ ->
+            IO.inspect return
+            raise("The Julia worker could not start")
+        end
     end
   end
 
@@ -132,7 +146,7 @@ defmodule Julex.Worker do
       "--color=yes",
       "--procs=#{nprocs() - 1}",
       "-e",
-      "import Pkg; Pkg.instantiate(); using Julex, #{module}; Julex.run_loop()"
+      "using Julex, #{module}; Julex.run_loop()"
     ]
   end
 end
