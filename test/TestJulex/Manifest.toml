@@ -4,16 +4,16 @@
 deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
-[[Eterm]]
-git-tree-sha1 = "b4dde7b5827c10d1940ff1cff86801e44d8ad62c"
+[[ErlangTerm]]
+git-tree-sha1 = "04a208013514603aa21796de554f82cf93ea020c"
 repo-rev = "master"
-repo-url = "https://github.com/helgee/Eterm.jl"
-uuid = "31f415ca-2d2d-11e9-05ad-e37ee3ba8a1a"
+repo-url = "https://github.com/helgee/ErlangTerm.jl"
+uuid = "6cf46ab0-e18c-5424-9784-c70c22e5b0c7"
 version = "0.1.0"
 
 [[Julex]]
-deps = ["Eterm", "Logging"]
-git-tree-sha1 = "23a12fb18bf61a713faafac57bfce0a38ee6408b"
+deps = ["ErlangTerm", "Logging"]
+git-tree-sha1 = "ca314d659d9ec084fc9ab6ed8d42e6df25354dd0"
 repo-rev = "master"
 repo-url = "https://github.com/helgee/Julex.jl"
 uuid = "d95183e4-2e0d-11e9-32e1-7dc7ede81e18"
